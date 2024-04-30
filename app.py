@@ -7,10 +7,10 @@ import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, make_response
 
+
 import sentry_sdk
 from sentry_sdk.integrations.flask import (FlaskIntegration)
 
-  
 
 # from markupsafe import escape
 import pymongo
@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
+
 sentry_sdk.init(
     dsn=os.getenv("SENTRY_DSN"),
     # enable_tracing=True,
@@ -30,16 +31,21 @@ sentry_sdk.init(
     send_default_pii=True,
 )
 
+
 # instantiate the app using sentry for debugging
 app = Flask(__name__)
+app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 # # turn on debugging if in development mode
-# app.debug = True if os.getenv("FLASK_ENV", "development") == "development" else False
+app.debug = True if os.getenv("FLASK_ENV", "development") == "development" else False
 
+'''
 @app.route("/")
 def hello_world():
     1/0  # raises an error
     return "<p>Hello, World!</p>"
+'''
 
 # try to connect to the database, and quit if it doesn't work
 try:
