@@ -8,9 +8,9 @@ import datetime
 from flask import Flask, render_template, request, redirect, url_for, make_response
 
 import sentry_sdk
-from sentry_sdk.integrations.flask import (
-    FlaskIntegration,
-)  # delete this if not using sentry.io
+from sentry_sdk.integrations.flask import (FlaskIntegration)
+
+  
 
 # from markupsafe import escape
 import pymongo
@@ -22,16 +22,11 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 sentry_sdk.init(
-    #dsn=os.getenv("SENTRY_DSN"),
-    dsn="https://7cc30db57033405d11162e02af9a0012@o4507057442193408.ingest.us.sentry.io/4507057556488192",
-    # enable_tracing=True,
-    # Set traces_sample_rate to 1.0 to capture 100% of transactions for performance monitoring.
-    traces_sample_rate=1.0,
-    # Set profiles_sample_rate to 1.0 to profile 100% of sampled transactions.
-    # We recommend adjusting this value in production.
-    profiles_sample_rate=1.0,
+    dsn=os.getenv("SENTRY_DSN"),
+    enable_tracing=True,
+    traces_sample_rate=1.0, # Set traces_sample_rate to 1.0 to capture 100% of transactions for performance monitoring.
+    profiles_sample_rate=1.0, # Set profiles_sample_rate to 1.0 to profile 100% of sampled transactions. We recommend adjusting this value in production
     integrations=[FlaskIntegration()],
-    #traces_sample_rate=1.0,
     send_default_pii=True,
 )
 
