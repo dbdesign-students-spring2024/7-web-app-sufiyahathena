@@ -7,7 +7,6 @@ import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, make_response
 
-# import logging
 import sentry_sdk
 from sentry_sdk.integrations.flask import (
     FlaskIntegration,
@@ -19,15 +18,12 @@ from pymongo.errors import ConnectionFailure
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
-# load credentials and configuration options from .env file
-# if you do not yet have a file named .env, make one based on the template in env.example
-load_dotenv(override=True)  # take environment variables from .env.
 
-# initialize Sentry for help debugging... this requires an account on sentrio.io
-# you will need to set the SENTRY_DSN environment variable to the value provided by Sentry
-# delete this if not using sentry.io
+load_dotenv(override=True)
+
 sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DSN"),
+    #dsn=os.getenv("SENTRY_DSN"),
+    dsn="https://7cc30db57033405d11162e02af9a0012@o4507057442193408.ingest.us.sentry.io/4507057556488192",
     # enable_tracing=True,
     # Set traces_sample_rate to 1.0 to capture 100% of transactions for performance monitoring.
     traces_sample_rate=1.0,
@@ -35,7 +31,7 @@ sentry_sdk.init(
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
     integrations=[FlaskIntegration()],
-    traces_sample_rate=1.0,
+    #traces_sample_rate=1.0,
     send_default_pii=True,
 )
 
@@ -44,6 +40,11 @@ app = Flask(__name__)
 
 # # turn on debugging if in development mode
 # app.debug = True if os.getenv("FLASK_ENV", "development") == "development" else False
+
+@app.route("/")
+def hello_world():
+    1/0  # raises an error
+    return "<p>Hello, World!</p>"
 
 # try to connect to the database, and quit if it doesn't work
 try:

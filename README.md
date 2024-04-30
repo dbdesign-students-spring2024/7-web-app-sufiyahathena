@@ -1,5 +1,12 @@
 # Flask-MongoDB Web App
 
-In this assignment you will create a web app that relies upon a MongoDB database.
-
-Replace the contents of this file with a description of your own web app, as described in [the instructions](./instructions.md).
+### Terminal Commands:
+export FLASK_APP=app.py
+export FLASK_ENV=development
+flask run
+//
+ssh ss14744@i6.cims.nyu.edu
+cd public_html
+cd 7-web-app-sufiyahathena
+cat flask.cgi
+chmod a+x flask.cgi
